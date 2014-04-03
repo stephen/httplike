@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/StephenCWan/httplike/issues"
   },
-  "homepage": "https://github.com/StephenCWan/httplike"
+  "homepage": "https://github.com/StephenCWan/httplike",
+  "devDependencies": {
+    "mocha": "~1.18.2"
+  }
 }
