@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/StephenCWan/httplike.git"
+    "url": "https://github.com/stephen/httplike.git"
   },
   "keywords": [
     "http",
@@ -18,9 +18,9 @@
   "author": "Stephen Wan <stephen@stephenwan.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/StephenCWan/httplike/issues"
+    "url": "https://github.com/stephen/httplike/issues"
   },
-  "homepage": "https://github.com/StephenCWan/httplike",
+  "homepage": "https://github.com/stephen/httplike",
   "devDependencies": {
     "mocha": "~1.18.2"
   }
