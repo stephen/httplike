@@ -4,7 +4,7 @@
   "description": "library for parsing http-like protocols",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,10 @@
   },
   "homepage": "https://github.com/stephen/httplike",
   "devDependencies": {
-    "mocha": "~1.18.2"
+    "mocha": "~1.18.2",
+    "gulp": "~3.6.1",
+    "gulp-mocha": "~0.4.1",
+    "gulp-jshint": "~1.5.3",
+    "jshint-stylish": "~0.1.5"
   }
 }
