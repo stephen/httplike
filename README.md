@@ -1,6 +1,8 @@
 httplike
 ========
 
+[![Build Status](https://travis-ci.org/stephen/httplike.svg?branch=master)](https://travis-ci.org/stephen/httplike)
+
 node.js package for parsing http-like protocols
 
 ## Installation
