@@ -11,8 +11,9 @@ describe('Parser', function() {
 			var parser = new Parser(mockStream);
 			parser.on('message', function(m) {
 				assert(m.method == 'GET');
-				assert(m.headers['Data'] == 'Hello');
-				assert(m.headers['Data-2'] == 'More Hello');
+
+				assert(m.getHeader('Data') == 'Hello');
+				assert(m.getHeader('Data-2') == 'More Hello');
 				done();
 			});
 			mockStream.write('GET /test HTTP/1.1\r\nData:Hello\r\nData-2:More Hello\r\n\r\n');
@@ -37,7 +38,7 @@ describe('Parser', function() {
 			var expected = [ 'Hello', 'Goodbye' ];
 
 			parser.on('message', function(m) {
-				assert(expected.shift() == m.headers['Data']);
+				assert(expected.shift() == m.getHeader('Data'));
 
 				if (expected.length == 0)
 					done();
@@ -67,10 +68,11 @@ describe('Parser', function() {
 	describe('#parseHeader', function() {
 		it('should parse headers', function() {
 			var headerData = Parser.parseHeader('GET /test/path HTTP/1.1\r\nData:Hello\r\nData-2:More Hello');
+
 			assert(headerData.path == '/test/path');
 			assert(headerData.method == 'GET');
-			assert(headerData.headers['Data'] == 'Hello');
-			assert(headerData.headers['Data-2'] == 'More Hello');
+			assert(headerData.headers['data'] == 'Hello');
+			assert(headerData.headers['data-2'] == 'More Hello');
 			assert(!headerData.hasContent);
 		});
 
@@ -80,8 +82,10 @@ describe('Parser', function() {
 
 		it('should handle multiple colons in header', function() {
 			var headerData = Parser.parseHeader('GET /test/path HTTP/1.1\r\nData:Hello:There\r\nData-2:More Hello');
-			assert(headerData.headers['Data'] == 'Hello:There');
-			assert(headerData.headers['Data-2'] == 'More Hello');
+
+			assert(headerData.headers['data'] == 'Hello:There');
+			assert(headerData.headers['data-2'] == 'More Hello');
 		});
+
 	});
 });

@@ -8,5 +8,6 @@ gulp.task('default', function () {
 
     gulp.src('./lib/*.js')
         .pipe(jshint({ "node" : true }))
-        .pipe(jshint.reporter('jshint-stylish'));
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'));
 });
