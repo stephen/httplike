@@ -3,6 +3,7 @@
 var assert = require('assert');
 var stream = require('stream');
 var Parser = require('../index');
+var Response = require('../lib/response');
 
 describe('Parser', function() {
 	describe('#Parser e2e', function() {
@@ -12,8 +13,8 @@ describe('Parser', function() {
 			parser.on('message', function(m) {
 				assert(m.method == 'GET');
 
-				assert(m.getHeader('Data') == 'Hello');
-				assert(m.getHeader('Data-2') == 'More Hello');
+				assert(m.getHeader('Data') === 'Hello');
+				assert(m.getHeader('Data-2') === 'More Hello');
 				done();
 			});
 			mockStream.write('GET /test HTTP/1.1\r\nData:Hello\r\nData-2:More Hello\r\n\r\n');
@@ -69,10 +70,10 @@ describe('Parser', function() {
 		it('should parse headers', function() {
 			var headerData = Parser.parseHeader('GET /test/path HTTP/1.1\r\nData:Hello\r\nData-2:More Hello');
 
-			assert(headerData.path == '/test/path');
-			assert(headerData.method == 'GET');
-			assert(headerData.headers['data'] == 'Hello');
-			assert(headerData.headers['data-2'] == 'More Hello');
+			assert(headerData.path === '/test/path');
+			assert(headerData.method === 'GET');
+			assert(headerData.headers['data'] === 'Hello');
+			assert(headerData.headers['data-2'] === 'More Hello');
 			assert(!headerData.hasContent);
 		});
 
@@ -83,8 +84,87 @@ describe('Parser', function() {
 		it('should handle multiple colons in header', function() {
 			var headerData = Parser.parseHeader('GET /test/path HTTP/1.1\r\nData:Hello:There\r\nData-2:More Hello');
 
-			assert(headerData.headers['data'] == 'Hello:There');
-			assert(headerData.headers['data-2'] == 'More Hello');
+			assert(headerData.headers['data'] === 'Hello:There');
+			assert(headerData.headers['data-2'] === 'More Hello');
+		});
+
+	});
+	describe('#response', function() {
+		it('should write a response', function(done) {
+			var expected = 'HTTP/1.1 200 OK\r\n\r\n';
+
+			var socket = new stream.PassThrough();
+			socket.on('data', function(d) {
+				assert(d.toString() === expected);
+				done();
+			});
+
+			var response = new Response(socket);
+
+			response.send();
+		});
+
+		it('should write a response with a custom protocol', function(done) {
+			var expected = 'RTSP/1.0 200 OK\r\n\r\n';
+
+			var socket = new stream.PassThrough();
+			socket.on('data', function(d) {
+				assert(d.toString() === expected);
+				done();
+			});
+
+			var response = new Response(socket, { protocol: 'RTSP/1.0' });
+
+			response.send();
+		});
+
+		it('should write a response with headers', function(done) {
+			var expected = 'HTTP/1.1 200 OK\r\ntest:hello\r\n\r\n';
+
+			var socket = new stream.PassThrough();
+			socket.on('data', function(d) {
+				assert(d.toString() === expected);
+				done();
+			});
+
+			var response = new Response(socket);
+			response.set('test', 'hello');
+
+			response.send();
+		});
+
+		it('should write a response with a body', function(done) {
+			var expected = 'HTTP/1.1 200 OK\r\ntest:hello\r\nContent-Length:5\r\n\r\nhello';
+
+			var socket = new stream.PassThrough();
+			socket.on('data', function(d) {
+				assert(d.toString() === expected);
+				done();
+			});
+
+			var response = new Response(socket);
+			response.set('test', 'hello');
+
+			response.send('hello');
+		});
+
+		it('should write a response with a JSON body', function(done) {
+			var expected = 'HTTP/1.1 200 OK\r\ntest:hello\r\nContent-Length:18\r\n\r\n{"body":"content"}';
+
+			var socket = new stream.PassThrough();
+			socket.on('data', function(d) {
+				d = d.toString();
+
+				var body = JSON.parse(d.split('\r\n\r\n')[1]);
+				assert(body['body'] === 'content');
+				assert(d === expected);
+				done();
+			});
+
+			var response = new Response(socket);
+			response.set('test', 'hello');
+
+			response.send({ 'body': 'content' });
 		});
 
 	});
