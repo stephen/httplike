@@ -27,5 +27,8 @@ p.on('message', function(msg) {
 
 ## Changelog
 
+##### 0.0.6
+- Implemented built-in response object modeled after express.js response.
+
 ##### 0.0.5
 - Breaking changes to how headers are accessed (```getHeader()``` function instead of ```headers[]```). See tests for example usage.
