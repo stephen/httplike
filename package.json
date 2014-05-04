@@ -27,5 +27,8 @@
     "gulp-mocha": "~0.4.1",
     "gulp-jshint": "~1.5.3",
     "jshint-stylish": "~0.1.5"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1"
   }
 }
