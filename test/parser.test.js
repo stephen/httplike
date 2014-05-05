@@ -56,6 +56,7 @@ describe('Parser', function() {
 
     parser.on('message', function(m) {
       assert(expected.shift() == m.content);
+      assert(m.method == 'GET');
 
       if (expected.length == 0)
         done();
