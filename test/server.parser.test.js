@@ -3,7 +3,7 @@
 var assert = require('assert');
 var stream = require('stream');
 var Parser = require('../index');
-var Response = require('../lib/response');
+var Response = require('../lib/server/response');
 
 describe('Parser', function() {
   it('should parse a request without content', function(done) {
@@ -65,6 +65,7 @@ describe('Parser', function() {
     mockStream.write('GET / HTTP/1.1\r\nContent-Length:' + expected[0].length + '\r\n\r\n' + expected[0]);
     mockStream.write('GET / HTTP/1.1\r\nContent-Length:' + expected[0].length + '\r\n\r\n' + expected[0]);
   });
+  
   describe('#parseHeader', function() {
     it('should parse headers', function() {
       var headerData = Parser.parseHeader('GET /test/path HTTP/1.1\r\nData:Hello\r\nData-2:More Hello');

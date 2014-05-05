@@ -26,7 +26,8 @@
     "gulp": "~3.6.1",
     "gulp-mocha": "~0.4.1",
     "gulp-jshint": "~1.5.3",
-    "jshint-stylish": "~0.1.5"
+    "jshint-stylish": "~0.1.5",
+    "nock": "~0.28.3"
   },
   "dependencies": {
     "lodash": "~2.4.1"
