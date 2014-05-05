@@ -27,8 +27,9 @@ p.on('message', function(msg) {
 
 ## Changelog
 
-##### 0.0.6
+##### 0.0.7
 - Implemented built-in response object modeled after express.js response.
+- Added ```trim()``` to method and headers
 
 ##### 0.0.5
 - Breaking changes to how headers are accessed (```getHeader()``` function instead of ```headers[]```). See tests for example usage.
