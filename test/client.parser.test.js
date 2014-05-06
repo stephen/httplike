@@ -12,7 +12,7 @@ describe('Parser', function() {
     parser.on('message', function(m) {
 
       assert(m.protocol === 'HTTP/1.1');
-      assert(m.statusCode === '200');
+      assert(m.statusCode === 200);
       assert(m.statusMessage === 'OK');
       assert(m.getHeader('Data') === 'Hello');
       assert(m.getHeader('Data-2') === 'More Hello');
