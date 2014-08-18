@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var stream = require('stream');
-var Parser = require('../index');
 var Response = require('../lib/server/response');
 
 describe('Response', function() {
@@ -16,7 +15,7 @@ describe('Response', function() {
 		var expected = 'HTTP/1.1 200 OK\r\n\r\n';
 
 		socket.on('data', function(d) {
-			assert(d.toString() === expected);
+			assert.equal(d.toString(), expected);
 			done();
 		});
 
@@ -29,7 +28,7 @@ describe('Response', function() {
 		var expected = 'HTTP/1.1 200 OK\r\ntest:hello\r\n\r\n';
 
 		socket.on('data', function(d) {
-			assert(d.toString() === expected);
+			assert.equal(d.toString(), expected);
 			done();
 		});
 
@@ -43,7 +42,7 @@ describe('Response', function() {
 		var expected = 'HTTP/1.1 200 OK\r\ntest:hello\r\nContent-Length:5\r\n\r\nhello';
 
 		socket.on('data', function(d) {
-			assert(d.toString() === expected);
+			assert.equal(d.toString(), expected);
 			done();
 		});
 
@@ -60,8 +59,8 @@ describe('Response', function() {
 			d = d.toString();
 
 			var body = JSON.parse(d.split('\r\n\r\n')[1]);
-			assert(body['body'] === 'content');
-			assert(d === expected);
+			assert.equal(body['body'], 'content');
+			assert.equal(d, expected);
 			done();
 		});
 
@@ -78,8 +77,8 @@ describe('Response', function() {
       d = d.toString();
 
       var body = JSON.parse(d.split('\r\n\r\n')[1]);
-      assert(body['body'] === 'content');
-      assert(d === expected);
+      assert.equal(body['body'], 'content');
+      assert.equal(d, expected);
       done();
     });
 
@@ -89,13 +88,13 @@ describe('Response', function() {
     response.send(401, { 'body': 'content' });
   });
 
-  describe('Options', function() {    
+  describe('Options', function() {
 
     it('should write a response with a custom protocol', function(done) {
       var expected = 'RTSP/1.0 200 OK\r\n\r\n';
 
       socket.on('data', function(d) {
-        assert(d.toString() === expected);
+        assert.equal(d.toString(), expected);
         done();
       });
 
@@ -110,7 +109,7 @@ describe('Response', function() {
       socket.on('data', function(d) {
         d = d.toString();
 
-        assert(d === expected);
+        assert.equal(d, expected);
         done();
       });
 
@@ -128,7 +127,7 @@ describe('Response', function() {
       socket.on('data', function(d) {
         d = d.toString();
 
-        assert(d === expected);
+        assert.equal(d, expected);
         done();
       });
 

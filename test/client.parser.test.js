@@ -2,7 +2,9 @@
 
 var assert = require('assert');
 var stream = require('stream');
-var Parser = require('../lib/client/parser');
+
+var httplike = require('../');
+var Parser = httplike.ClientParser;
 
 describe('Parser', function() {
   it('should parse a response', function(done) {
@@ -11,11 +13,12 @@ describe('Parser', function() {
 
     parser.on('message', function(m) {
 
-      assert(m.protocol === 'HTTP/1.1');
-      assert(m.statusCode === 200);
-      assert(m.statusMessage === 'OK');
-      assert(m.getHeader('Data') === 'Hello');
-      assert(m.getHeader('Data-2') === 'More Hello');
+      assert.equal(m.protocol, 'HTTP/1.1');
+      assert.equal(m.statusCode, 200);
+      assert.equal(m.statusMessage, 'OK');
+      assert.equal(m.getHeader('Data'), 'Hello');
+      assert.equal(m.getHeader('Data-2'), 'More Hello');
+      assert.equal(typeof m.statusCode, 'number');
       done();
     });
 
