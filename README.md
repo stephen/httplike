@@ -27,6 +27,9 @@ p.on('message', function(msg) {
 
 ## Changelog
 
+##### 0.0.9
+- Removed dependency on ```lodash```
+
 ##### 0.0.7
 - Implemented built-in response object modeled after express.js response.
 - Added ```trim()``` to method and headers
