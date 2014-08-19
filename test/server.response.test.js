@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var stream = require('stream');
-var Response = require('../lib/server/response');
+var Response = require('../lib/response');
 
 describe('Response', function() {
   var socket = null;
