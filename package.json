@@ -16,6 +16,9 @@
     "custom"
   ],
   "author": "Stephen Wan <stephen@stephenwan.net>",
+  "contributors": [
+    "Linus Unnebäck <linus@folkdatorn.se>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/stephen/httplike/issues"
