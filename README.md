@@ -27,6 +27,9 @@ p.on('message', function(msg) {
 
 ## Changelog
 
+##### 1.0.0
+- Removed ```parseHeader``` from public interface on `ClientParser` and `ServerParser`
+
 ##### 0.0.9
 - Removed dependency on ```lodash```
 
