@@ -55,6 +55,23 @@ describe('Parser', function() {
     mockStream.write(data1);
   });
 
+  it('should parse multiple pipelined http requests', function (done) {
+
+    var expected = [ 'Hello', 'Goodbye' ];
+
+    parser.on('message', function(m) {
+      assert.equal(m.method, 'GET');
+      assert.equal(expected.shift(), m.getHeader('Data'));
+
+      (expected.length === 0) && done();
+    });
+
+    var data0 = 'GET / HTTP/1.1\r\nData:' + expected[0] + '\r\n\r\n';
+    var data1 = 'GET / HTTP/1.1\r\nData:' + expected[1] + '\r\n\r\n';
+
+    mockStream.write(data0 + data1);
+  });
+
   it('should parse multiple http requests with content', function (done) {
 
     var expected = [ 'Hello', 'Goodbye' ];
