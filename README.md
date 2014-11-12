@@ -27,6 +27,9 @@ p.on('message', function(msg) {
 
 ## Changelog
 
+##### 1.0.1
+- Fixed parsing involving UTF-8 characters (PR #8), and potential stall in pipelined requests (PR #9)
+
 ##### 1.0.0
 - Removed ```parseHeader``` from public interface on `ClientParser` and `ServerParser`
 
