@@ -1,6 +1,6 @@
 {
   "name": "httplike",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "library for parsing http-like protocols",
   "main": "index.js",
   "scripts": {
